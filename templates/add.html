@@ -1,0 +1,62 @@
+{% block content %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Add List</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Add Grocery List</h1>
+            <form>
+              <div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-action">
+                </div>
+                <div class="card-content">
+                    <form class="col s12">
+                          <form name="additems" action="{% url 'add' %}" method="GET">
+                               {% csrf_token %}
+                                 <div class="form-group">
+                            <label name="serialnumber" class="control-label">Serial No.</label>
+                            <input id="serialnumber" name="serialnumber"   class="form-control" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label name="itemname" class="control-label">Item  Name</label>
+                            <input id="itemname" name="itemname"   class="form-control" />
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label name="itemquantity" class="control-label">Item Quantity</label>
+                            <input id="itemquantity" name="itemquantity"  class="form-control"/>
+                            <span class="text-danger"></span>
+                        </div>
+                        <class="form-group">
+                            <label name="itemstatus" class="control-label">Item Status</label>
+                            <select id="itemstatus" Name="itemStatus" class="form-control" />
+                            <span class="text-danger"></span>
+                            <option>pending</option>
+                            <option>Bought</option>
+                           </select>
+                        </div>
+                                <div class="form-group">
+                            <label name="date" class="control-label">Date</label>
+                            <input id="date"type="date" Name="date" class="form-control" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="float:right;">
+                            <input name="additem"  type="submit"  value="additem"  class="btn btn-danger" class="btn btn-default" />
+                            <a href="/homepage" class="btn btn-danger" class="btn btn-default">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% endblock %}

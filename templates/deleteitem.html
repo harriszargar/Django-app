@@ -1,0 +1,38 @@
+{% block content %}
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Update List</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Delete Grocery Item:</h1>
+            <form>
+<div id="page-inner">
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-action">
+
+                </div>
+
+                <div class="card-content">
+                    <form name="deleteitem" action="{% url 'deleteitem' %}" method="GET">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label name="serialnumber" class="control-label">Serial No.</label>
+                        <select  id="serialnumber" name="serialnumber"  id="serialnumber"  style="font-size: 14px;border-radius: 4px;border: 1px solid #ccc;line-height: 1.42857143;color: #555;"class="form-control" >
+              {% for entry in listf %}
+              {% for val in entry %}
+              <option>{{ val }}</option>
+              {% endfor %}
+              {% endfor %}
+          </select>
+                            <input type="submit"  name="deleteitem"  value="deleteitem"   class="btn btn-danger" class="btn btn-default" />
+
+{% endblock %}

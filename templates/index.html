@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>View List</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        <div class="container mt-5">
+
+            <!-- top -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1  class="text-success">View Grocery List</h1>
+                    <h2 class="text-success">Priority items:</h2>
+                </div>
+                <div class="col-lg-6 float-right">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!-- Date Filtering-->
+                            <form action = "{%url 'index' %}" method="POST" >
+                            <input type="date"  id="mydate" name="mydate" class="form-control">
+                                <br>
+                                <a href="/add" class="btn btn-danger" class="btn btn-default"><i class="fa fa-plus"></i> Add NEW ITEMS</a>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <input type="submit" name ="count" class="btn btn-danger" value="filter">
+                            {% csrf_token %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- // top -->
+            <!-- Grocery Cards -->
+            <div class="row mt-4">
+                <!--- -->
+                <!-- Loop This -->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                           <h5 class="card-title">  {% for val in data1 %}
+                                {% csrf_token %}
+
+                            <tr>
+                             {% for f in val %}
+                             <td>  <h6 class="text-success">{{f}}</h6></td>
+                             {% endfor %}
+                            </tr>
+                            {% endfor %}</h5>
+                        </div>
+                      </div>
+                </div>
+                <!-- // Loop -->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                           <h5 class="card-title">  {% for val in data2 %}
+                                {% csrf_token %}
+
+                            <tr>
+                             {% for g in val %}
+                             <td><h6  class="text-success">{{g}}</h6></td>
+                             {% endfor %}
+                            </tr>
+                            {% endfor %}</h5>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+
+
+                           <h5 class="card-title">  {% for val in data3 %}
+                                {% csrf_token %}
+
+                            <tr>
+                             {% for h in val %}
+                             <td>  <h6  class="text-success">{{h}}</h6></td>
+                             {% endfor %}
+                            </tr>
+                            {% endfor %}</h5>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </body>
+      </div>
+        </div>
+    </body>
+     <h4 class="text-success">Your Complete Grocery List:</h4>
+    <div class="card-content">
+            <class="card-body table-responsive">
+            <table name ="myTableId" class="table table-hover">
+              <thead class="text-warning">
+                                    <th>SNo.</th>
+                                    <th>ItemName</th>
+                                    <th>ItemStatus</th>
+                                    <th>ItemQuantity</th>
+                                    <th>Date</th>
+                                     <th>Action</th>
+
+                            </thead>
+                            <tbody>
+                             {% for val in data %}
+                                {% csrf_token %}
+
+                            <tr>
+                             {% for s in val %}
+                             <td>{{s}}</td>
+                             {% endfor %}
+                                <td><a name="Edit" class="use-address" form ="EditForm" href=update>Edit</a>| <a id="Delete_button" name="Delete" class="delete-address" type="submit" form ="DeleteForm" href="deleteitem">Delete</a>
+                            </tr>
+                            {% endfor %}
+
+
+
+{% block javascripts %}
+
+<script>
+
+$('.use-address').on('click', function(){
+  SNo.= $(this).parents('tr').find("td:eq(0)").text();
+  ItemName = $(this).parents('tr').find("td:eq(1)").text();
+  ItemQuantity = $(this).parents('tr').find("td:eq(2)").text();
+  ItemStatus = $(this).parents('tr').find("td:eq(3)").text();
+  Date = $(this).parents('tr').find("td:eq(4)").text();
+  // console.log(txt);
+
+  sessionStorage.setItem("SNo.", SNo.);
+  sessionStorage.setItem("ItemName", ItemName);
+  sessionStorage.setItem("ItemQuantity", ItemQuantity);
+  sessionStorage.setItem("ItemStatus", ItemStatus);
+  sessionStorage.setItem("Date", Date);
+  // var queryString = "?para1=" + txt;
+  // window.location.href = "update.html" + queryString;
+  // alert(queryString)
+});
+$('.Delete_button').on('click', function() {
+  Username = $(this).parents('tr').find("td:eq(0)").text();
+  var obj = {'ItemName': ItemName}
+    $.ajax({
+        type: 'POST',
+        url: 'Delete',
+        data: JSON.stringify(obj),
+        success: function(data) {
+         $('body').html(data); //EDITED
+    },
+    error: function(rs, e) {
+         alert(rs.responseText);
+    }
+    });
+});
+
+</script>
+
+{% endblock javascripts %}
